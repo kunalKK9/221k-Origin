@@ -17,13 +17,8 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup leftMotors({1, 2, -3}, pros::MotorGearset::blue); // left motor group - ports 1 2 3
 pros::MotorGroup rightMotors({-4, -5, 6}, pros::MotorGearset::blue); // right motor group - ports 4 5 6
 
-// optical sensor for the hood
-pros::Optical hoodSensor(19); // optical sensor on port 19
-pros::Optical hoodSensor2(16); // optical sensor on port 16, used for colour detection
-
 // optical sensor for alliance colour detection
 pros::Optical allianceSensor(17); // optical sensor on port 17
-pros::Optical allianceSensor2(15); // optical sensor on port 15, used for colour detection
 
 // Scraper piston
 pros::adi::DigitalOut scraper('A');
@@ -313,12 +308,12 @@ void opcontrol() {
         }
 
         //toggle direction of hood failsafe
-        if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP)) {
+        if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
             hood.set_value(false);
         }
 
         // Toggle motor direction when A is pressed
-        if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
+        if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
             midMotorReversed = !midMotorReversed;
         }
 
@@ -326,19 +321,15 @@ void opcontrol() {
         if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
             int power = midMotorReversed ? 127 : -127;
             topMotor.move(power);
+        } else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+            topMotor.move(127);
         } else {
             topMotor.move(0);
         }
 
-
-
-
-
         //delay to save resources ig
         pros::delay(10);
 
-
     }
-
 
 }
