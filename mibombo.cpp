@@ -343,34 +343,11 @@ void opcontrol() {
 
     // Control intake, conveyor, director, and outtake piston together
     // put a boolean under literally everything so it wouldnt override w task
-    if (!directorReversePulseActive) {
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-            intakechain.move(127);
-            conveyerMotor.move(127);
-            directormotor.move(127);
-            outtakefunction.set_value(false);
-
-        } else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-            intakechain.move(-127);
-            conveyerMotor.move(-60);
-            directormotor.move(-60);
-            outtakefunction.set_value(true);
-
-        } else {
-            intakechain.move(0);
-            conveyerMotor.move(0);
-            directormotor.move(0);
-            outtakefunction.set_value(false);
-        }
-    }
-
-
+    
   
 
     // might also add a colour sensor like snacky so we can 
     // distance sensor placed around the front of the outtake. 
-
-
 
 
 
